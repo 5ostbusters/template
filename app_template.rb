@@ -191,6 +191,7 @@ def data_entry(file_path)
   puts file_path
   header = nil
 
+  c = 1
   CSV.open(file_path,'r').each do |row|
     if header.nil?
       header = row
@@ -201,13 +202,14 @@ def data_entry(file_path)
     record = model.new
 
     if Rails.env.to_s == 'development'
-      record.send('id=',row.count)
+      record.send('id=',c)
     end
 
     header.each_with_index do |column,index|
       record.send(\"\#{column}=\",row[index]) unless row[index].nil?
     end
     record.save!
+    c += 1
   end
 end
 
