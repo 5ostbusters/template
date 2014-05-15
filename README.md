@@ -19,15 +19,12 @@ template
 
 ### view
 
+    %div{:style => "width: 800px;"}
+      #map{:style => "width: 800px; height: 400px;"}
     :javascript
       handler = Gmaps.build('Google');
       handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
-      markers = handler.addMarkers(
-        =raw @hash.to_json
-      );
-      handler.bounds.extendWith(markers);
-      handler.fitMapToBounds();
-    });
-
-    %style{:width => '800px'}
-      #map{:style=>"width:800px; height:400px;"}
+          markers = handler.addMarkers(#{raw @hash.to_json});
+          handler.bounds.extendWith(markers);
+          handler.fitMapToBounds();
+      });
